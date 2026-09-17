@@ -14,5 +14,20 @@
   </head>
   <body class="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased overflow-hidden select-none font-sans">
     <div id="root"></div>
+    <script>
+      // Detection: If opened directly on GitHub Pages without a dev server, load production assets
+      if (window.location.hostname.includes('github.io') || !window.location.port) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = './assets/index-e_B3NmZm.css';
+        document.head.appendChild(link);
+
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.crossOrigin = 'anonymous';
+        script.src = './assets/index-CIF2tmsn.js';
+        document.body.appendChild(script);
+      }
+    </script>
   </body>
 </html>
