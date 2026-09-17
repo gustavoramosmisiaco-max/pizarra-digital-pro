@@ -1,7 +1,12 @@
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Configure pdfjs worker to render PDFs reliably in browser
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version || '3.11.174'}/pdf.worker.min.js`;
+function initPdfWorker() {
+  if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
+    if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  }
+}
 
 export interface PdfPageRenderResult {
   pageIndex: number;
@@ -18,6 +23,7 @@ export async function loadPdfPages(
   file: File,
   onProgress?: (current: number, total: number) => void
 ): Promise<PdfPageRenderResult[]> {
+  initPdfWorker();
   const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
   const pdfDoc = await loadingTask.promise;

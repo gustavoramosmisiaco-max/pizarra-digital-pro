@@ -101,7 +101,7 @@ export const App: React.FC = () => {
   }, [project]);
 
   // Active page shortcut
-  const activePage = project.pages[project.activePageIndex] || project.pages[0];
+  const activePage = (project?.pages && project.pages[project.activePageIndex]) || (project?.pages && project.pages[0]) || createDefaultPage('page_1', 'Diapositiva 1');
 
   // Callback to update canvas content of current page
   const handleCanvasChange = useCallback((json: string, thumbnail: string) => {
